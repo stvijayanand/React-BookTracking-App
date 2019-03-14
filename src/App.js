@@ -4,6 +4,7 @@ import "./App.css";
 import BookShelf from "./BookShelf";
 import SearchButton from "./SearchButton";
 import SearchBooksBar from "./SearchBooksBar";
+import * as BooksAPI from "./BooksAPI";
 
 class BooksApp extends React.Component {
   state = {
@@ -14,10 +15,19 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false,
-    shelves: []
+    books: []
   };
 
+
+  componentDidMount() {
+    BooksAPI.getAll().then(books => (
+      this.setState({ books })
+    ));
+  }
+
   render() {
+    const { books } = this.state;
+
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -34,9 +44,9 @@ class BooksApp extends React.Component {
               </div>
               <div className="list-books-content">
                 <div>
-                  <BookShelf shelfName="Currently Reading" />
-                  <BookShelf shelfName="Want to Read" />
-                  <BookShelf shelfName="Read" />
+                  <BookShelf shelfName="Currently Reading" books={books} />
+                  <BookShelf shelfName="Want to Read" books={books} />
+                  <BookShelf shelfName="Read" books={books} />
                 </div>
               </div>
               <SearchButton></SearchButton>
