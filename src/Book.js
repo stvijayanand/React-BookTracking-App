@@ -3,7 +3,7 @@ import BookShelfChanger from "./BookShelfChanger";
 
 const Book = props => {
     const { bookInfo } = props;
-    //console.log(bookInfo.imageLinks.thumbnail);
+
     const imageStyle = {
         width: 128,
         height: 193,
