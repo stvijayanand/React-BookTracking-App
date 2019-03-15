@@ -11,6 +11,12 @@ const Book = props => {
             'url(' + bookInfo.imageLinks.thumbnail + '})'
     };
 
+    let authors = '';
+    for (let author of bookInfo.authors) {
+        authors = (authors.length > 0) ? (authors + ", ") : authors;
+        authors += author;
+    }
+
     return (<li>
         <div className="book">
             <div className="book-top">
@@ -21,7 +27,7 @@ const Book = props => {
                 <BookShelfChanger></BookShelfChanger>
             </div>
             <div className="book-title">{bookInfo.title}</div>
-            <div className="book-authors">{bookInfo.authors[0]}</div>
+            <div className="book-authors">{authors}</div>
         </div>
     </li>);
 }
