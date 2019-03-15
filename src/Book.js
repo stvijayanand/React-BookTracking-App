@@ -24,7 +24,7 @@ const Book = props => {
                     className="book-cover"
                     style={imageStyle}
                 />
-                <BookShelfChanger></BookShelfChanger>
+                <BookShelfChanger currentShelf={bookInfo.shelf}></BookShelfChanger>
             </div>
             <div className="book-title">{bookInfo.title}</div>
             <div className="book-authors">{authors}</div>

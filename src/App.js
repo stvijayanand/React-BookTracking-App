@@ -5,10 +5,7 @@ import BookShelf from "./BookShelf";
 import SearchButton from "./SearchButton";
 import SearchBooksBar from "./SearchBooksBar";
 import * as BooksAPI from "./BooksAPI";
-
-const CURRENTLY_READING = "currentlyReading";
-const WANT_TO_READ = "wantToRead";
-const READ = "read";
+import * as Constants from "./utilities";
 
 class BooksApp extends React.Component {
   state = {
@@ -48,9 +45,12 @@ class BooksApp extends React.Component {
               </div>
               <div className="list-books-content">
                 <div>
-                  <BookShelf shelfName="Currently Reading" books={books.filter(book => book.shelf === CURRENTLY_READING)} />
-                  <BookShelf shelfName="Want to Read" books={books.filter(book => book.shelf === WANT_TO_READ)} />
-                  <BookShelf shelfName="Read" books={books.filter(book => book.shelf === READ)} />
+                  <BookShelf shelfName="Currently Reading"
+                    books={books.filter(book => book.shelf === Constants.CURRENTLY_READING)} />
+                  <BookShelf shelfName="Want to Read"
+                    books={books.filter(book => book.shelf === Constants.WANT_TO_READ)} />
+                  <BookShelf shelfName="Read"
+                    books={books.filter(book => book.shelf === Constants.READ)} />
                 </div>
               </div>
               <SearchButton></SearchButton>
