@@ -2,7 +2,7 @@ import React from "react"
 import BookShelfChanger from "./BookShelfChanger";
 
 const Book = props => {
-    const { bookInfo } = props;
+    const { bookInfo, updateBookShelf } = props;
 
     const imageStyle = {
         width: 128,
@@ -24,7 +24,8 @@ const Book = props => {
                     className="book-cover"
                     style={imageStyle}
                 />
-                <BookShelfChanger currentShelf={bookInfo.shelf}></BookShelfChanger>
+                <BookShelfChanger bookInfo={bookInfo}
+                    updateBookShelf={updateBookShelf}></BookShelfChanger>
             </div>
             <div className="book-title">{bookInfo.title}</div>
             <div className="book-authors">{authors}</div>

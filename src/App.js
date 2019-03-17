@@ -26,8 +26,35 @@ class BooksApp extends React.Component {
     ));
   }
 
+  updateBookShelf = (bookToUpdate, shelf) => {
+    console.log(bookToUpdate);
+    BooksAPI.update(bookToUpdate, shelf);
+
+    this.setState((currentState) => {
+      let newBooks = {};
+
+      newBooks = currentState.books.map(book => {
+        if (bookToUpdate.id !== book.id) {
+          return book;
+        }
+        else {
+          console.log("id match");
+          return Object.assign({}, book, { shelf: bookToUpdate.shelf });
+        }
+      });
+
+      return {
+        books: newBooks
+      };
+    });
+  }
+
   render() {
     const { books } = this.state;
+    // Object.entries(Constants.shelves).forEach(entry => (
+    //   console.log(entry[0])
+    // ))
+
 
     return (
       <div className="app">
@@ -45,12 +72,13 @@ class BooksApp extends React.Component {
               </div>
               <div className="list-books-content">
                 <div>
-                  <BookShelf shelfName="Currently Reading"
-                    books={books.filter(book => book.shelf === Constants.CURRENTLY_READING)} />
-                  <BookShelf shelfName="Want to Read"
-                    books={books.filter(book => book.shelf === Constants.WANT_TO_READ)} />
-                  <BookShelf shelfName="Read"
-                    books={books.filter(book => book.shelf === Constants.READ)} />
+                  {Object.entries(Constants.shelves).map(entry => (
+                    <BookShelf key={entry[0]}
+                      shelfName={entry[1]}
+                      books={books.filter(book => book.shelf === entry[0])}
+                      updateBookShelf={this.updateBookShelf} />
+                  ))
+                  }
                 </div>
               </div>
               <SearchButton></SearchButton>
