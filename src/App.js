@@ -26,9 +26,8 @@ class BooksApp extends React.Component {
     ));
   }
 
-  updateBookShelf = (bookToUpdate, shelf) => {
-    console.log(bookToUpdate);
-    BooksAPI.update(bookToUpdate, shelf);
+  updateBookShelf = (bookToUpdate, newShelf) => {
+    BooksAPI.update(bookToUpdate, newShelf);
 
     this.setState((currentState) => {
       let newBooks = {};
@@ -38,8 +37,7 @@ class BooksApp extends React.Component {
           return book;
         }
         else {
-          console.log("id match");
-          return Object.assign({}, book, { shelf: bookToUpdate.shelf });
+          return Object.assign({}, book, { shelf: newShelf });
         }
       });
 
@@ -51,10 +49,6 @@ class BooksApp extends React.Component {
 
   render() {
     const { books } = this.state;
-    // Object.entries(Constants.shelves).forEach(entry => (
-    //   console.log(entry[0])
-    // ))
-
 
     return (
       <div className="app">
