@@ -16,22 +16,15 @@ class BooksApp extends React.Component {
     books: []
   };
 
-
-  onSearch = () => {
-    this.setState({ showSearchPage: true });
+  getAll = () => {
+    BooksAPI.getAll().then(books => (
+      this.setState({ books })
+    ));
   }
 
+
   componentDidMount() {
-    this.setState(currentState => {
-      if (currentState.showSearchPage) {
-        return { books: currentState.books }
-      }
-      else {
-        BooksAPI.getAll().then(books => (
-          this.setState({ books })
-        ));
-      }
-    });
+    this.getAll();
   }
 
   updateBookShelf = (bookToUpdate, newShelf) => {
@@ -74,8 +67,7 @@ class BooksApp extends React.Component {
           path="/"
           render={() => (
             <Shelves books={books}
-              updateBookShelf={this.updateBookShelf}
-              onSearch={this.onSearch}></Shelves>
+              updateBookShelf={this.updateBookShelf}></Shelves>
           )}></Route>
 
         <Route
@@ -83,7 +75,8 @@ class BooksApp extends React.Component {
           render={() => (
             <Search books={books}
               updateBookShelf={this.updateBookShelf}
-              searchByTitleOrAuthor={this.searchByTitleOrAuthor}></Search>
+              searchByTitleOrAuthor={this.searchByTitleOrAuthor}
+              onClose={this.getAll}></Search>
           )}></Route>
 
       </div>

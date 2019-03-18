@@ -23,10 +23,11 @@ class SearchBooksBar extends Component {
 
     render() {
         const { searchText } = this.state;
+        const { onClose } = this.props;
 
 
         return (<div className="search-books-bar">
-            <Link to="/" className="close-search">
+            <Link to="/" className="close-search" onClick={onClose}>
                 close
         </Link>
 

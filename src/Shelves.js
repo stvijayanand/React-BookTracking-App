@@ -5,7 +5,7 @@ import SearchButton from "./SearchButton"
 import PropTypes from "prop-types"
 
 const Shelves = props => {
-    const { books, updateBookShelf, onSearch } = props;
+    const { books, updateBookShelf } = props;
 
     return (<div className="list-books">
         <div className="list-books-title">
@@ -13,7 +13,7 @@ const Shelves = props => {
         </div>
         <div className="list-books-content">
             <div>
-                {Object.entries(Constants.shelves).map(entry => (
+                {books && Array.isArray(books) && Object.entries(Constants.shelves).map(entry => (
                     <BookShelf key={entry[0]}
                         shelfName={entry[1]}
                         books={books.filter(book => book.shelf === entry[0])}
@@ -22,12 +22,11 @@ const Shelves = props => {
                 }
             </div>
         </div>
-        <SearchButton onSearch={onSearch}></SearchButton>
+        <SearchButton></SearchButton>
     </div>);
 }
 
 Shelves.propTypes = {
-    books: PropTypes.array.isRequired,
     updateBookShelf: PropTypes.func.isRequired
 }
 
