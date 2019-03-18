@@ -12,9 +12,11 @@ const Book = props => {
     };
 
     let authors = '';
-    for (let author of bookInfo.authors) {
-        authors = (authors.length > 0) ? (authors + ", ") : authors;
-        authors += author;
+    if (bookInfo.authors) {
+        for (let author of bookInfo.authors) {
+            authors = (authors.length > 0) ? (authors + ", ") : authors;
+            authors += author;
+        }
     }
 
     return (<li>

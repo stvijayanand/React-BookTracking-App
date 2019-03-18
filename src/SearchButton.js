@@ -1,9 +1,11 @@
 import React from "react"
 
 const SearchButton = props => {
+    const { onSearch } = props;
+
     return (
         <div className="open-search">
-            <button onClick={() => this.setState({ showSearchPage: true })}>
+            <button onClick={() => onSearch()}>
                 Add a book
                 </button>
         </div>);

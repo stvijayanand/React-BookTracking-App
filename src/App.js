@@ -6,6 +6,7 @@ import SearchButton from "./SearchButton";
 import SearchBooksBar from "./SearchBooksBar";
 import * as BooksAPI from "./BooksAPI";
 import * as Constants from "./utilities";
+import Book from "./Book"
 
 class BooksApp extends React.Component {
   state = {
@@ -21,9 +22,16 @@ class BooksApp extends React.Component {
 
 
   componentDidMount() {
-    BooksAPI.getAll().then(books => (
-      this.setState({ books })
-    ));
+    this.setState(currentState => {
+      if (currentState.showSearchPage) {
+        return { books: currentState.books }
+      }
+      else {
+        BooksAPI.getAll().then(books => (
+          this.setState({ books })
+        ));
+      }
+    });
   }
 
   updateBookShelf = (bookToUpdate, newShelf) => {
@@ -47,6 +55,23 @@ class BooksApp extends React.Component {
     });
   }
 
+  onSearch = () => {
+    this.setState({ showSearchPage: true });
+  }
+
+  searchByTitleOrAuthor = query => {
+
+    BooksAPI.search(query).then(books => (
+      this.setState(currentState => {
+        return { books };
+      })
+
+    )).catch(() => (
+      console.log('catch')
+    ));
+  }
+
+
   render() {
     const { books } = this.state;
 
@@ -54,9 +79,16 @@ class BooksApp extends React.Component {
       <div className="app">
         {this.state.showSearchPage ? (
           <div className="search-books">
-            <SearchBooksBar></SearchBooksBar>
+            <SearchBooksBar onInput={this.searchByTitleOrAuthor}></SearchBooksBar>
             <div className="search-books-results">
-              <ol className="books-grid" />
+              <ol className="books-grid">
+                {books && Array.isArray(books) && books.map(book => (
+                  <Book key={book.id}
+                    bookInfo={book}
+                    updateBookShelf={this.updateBookShelf}></Book>
+                ))
+                }
+              </ol>
             </div>
           </div>
         ) : (
@@ -75,7 +107,7 @@ class BooksApp extends React.Component {
                   }
                 </div>
               </div>
-              <SearchButton></SearchButton>
+              <SearchButton onSearch={this.onSearch}></SearchButton>
             </div>
           )}
       </div>
