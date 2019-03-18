@@ -49,11 +49,29 @@ class BooksApp extends React.Component {
   }
 
   searchByTitleOrAuthor = query => {
-    BooksAPI.search(query).then(books => (
-      this.setState({ books })
-    )).catch((error) => (
-      console.log(error)
-    ));
+    //Empty query
+    if (!query) {
+      this.getAll();
+    }
+    else {
+      let shelvedBooks = [];
+      BooksAPI.getAll().then(books => (shelvedBooks = books)); //Get all the shelved books so you can set shelf values in the search results
+
+      //search does not return shelf value for books
+      BooksAPI.search(query).then(books => {
+        if (books && Array.isArray(books)) { //on valid results
+          for (let shelvedBook of shelvedBooks) {
+            const matches = books.filter(book => book.id === shelvedBook.id);
+            if (matches.length > 0) {
+              matches[0].shelf = shelvedBook.shelf;
+            }
+          }
+        }
+        this.setState({ books });
+      }).catch((error) => (
+        console.log(error)
+      ));
+    }
   }
 
 
