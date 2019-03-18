@@ -1,9 +1,15 @@
 import React, { Component } from "react"
+import PropTypes from "prop-types"
 
 class SearchBooksBar extends Component {
     state = {
         searchText: ''
     }
+
+    static propTypes = {
+        onInput: PropTypes.func.isRequired
+    }
+
 
     handleSearchChange = query => {
         const { onInput } = this.props;

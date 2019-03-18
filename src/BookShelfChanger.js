@@ -1,10 +1,16 @@
 import React, { Component } from "react"
 import * as Constants from "./utilities"
+import PropTypes from "prop-types"
 
 
 class BookShelfChanger extends Component {
     state = {
         option: ''
+    }
+
+    static propTypes = {
+        bookInfo: PropTypes.object.isRequired,
+        updateBookShelf: PropTypes.func.isRequired
     }
 
     handleChange = event => {
