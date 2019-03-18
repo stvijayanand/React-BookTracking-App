@@ -1,12 +1,9 @@
 import React from "react";
-// import * as BooksAPI from './BooksAPI'
 import "./App.css";
-import BookShelf from "./BookShelf";
-import SearchButton from "./SearchButton";
-import SearchBooksBar from "./SearchBooksBar";
 import * as BooksAPI from "./BooksAPI";
-import * as Constants from "./utilities";
-import Book from "./Book"
+import Shelves from "./Shelves";
+import Search from "./Search";
+import { Route } from "react-router-dom"
 
 class BooksApp extends React.Component {
   state = {
@@ -16,10 +13,13 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
-    showSearchPage: false,
     books: []
   };
 
+
+  onSearch = () => {
+    this.setState({ showSearchPage: true });
+  }
 
   componentDidMount() {
     this.setState(currentState => {
@@ -55,10 +55,6 @@ class BooksApp extends React.Component {
     });
   }
 
-  onSearch = () => {
-    this.setState({ showSearchPage: true });
-  }
-
   searchByTitleOrAuthor = query => {
     BooksAPI.search(query).then(books => (
       this.setState({ books })
@@ -73,39 +69,23 @@ class BooksApp extends React.Component {
 
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
-          <div className="search-books">
-            <SearchBooksBar onInput={this.searchByTitleOrAuthor}></SearchBooksBar>
-            <div className="search-books-results">
-              <ol className="books-grid">
-                {books && Array.isArray(books) && books.map(book => (
-                  <Book key={book.id}
-                    bookInfo={book}
-                    updateBookShelf={this.updateBookShelf}></Book>
-                ))
-                }
-              </ol>
-            </div>
-          </div>
-        ) : (
-            <div className="list-books">
-              <div className="list-books-title">
-                <h1>MyReads</h1>
-              </div>
-              <div className="list-books-content">
-                <div>
-                  {Object.entries(Constants.shelves).map(entry => (
-                    <BookShelf key={entry[0]}
-                      shelfName={entry[1]}
-                      books={books.filter(book => book.shelf === entry[0])}
-                      updateBookShelf={this.updateBookShelf} />
-                  ))
-                  }
-                </div>
-              </div>
-              <SearchButton onSearch={this.onSearch}></SearchButton>
-            </div>
-          )}
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <Shelves books={books}
+              updateBookShelf={this.updateBookShelf}
+              onSearch={this.onSearch}></Shelves>
+          )}></Route>
+
+        <Route
+          path="/search"
+          render={() => (
+            <Search books={books}
+              updateBookShelf={this.updateBookShelf}
+              searchByTitleOrAuthor={this.searchByTitleOrAuthor}></Search>
+          )}></Route>
+
       </div>
     );
   }
