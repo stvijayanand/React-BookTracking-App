@@ -24,16 +24,17 @@ class BookShelfChanger extends Component {
         const currentShelf = Object.entries(Constants.shelves).filter(shelf => shelf[0] === bookInfo.shelf)[0];
         const OtherShelves = Object.entries(Constants.shelves).filter(shelf => shelf[0] !== bookInfo.shelf);
 
+        const optionNone = <option key={Constants.NONE} value={Constants.NONE}>None</option>;
         let optionsElement;
         if (currentShelf) {
             optionsElement = [<option key={currentShelf[0]} value={currentShelf[0]}>* {currentShelf[1]}</option>
                 , OtherShelves.map(entry => (
                     <option key={entry[0]} value={entry[0]}>{entry[1]}</option>
                 ))
-                , <option key={Constants.NONE} value={Constants.NONE}>None</option>];
+                , optionNone];
         }
         else {
-            optionsElement = [<option key={Constants.NONE} value={Constants.NONE}>* None</option>
+            optionsElement = [optionNone
                 , Object.entries(Constants.shelves).map(entry => (
                     <option key={entry[0]} value={entry[0]}>{entry[1]}</option>
                 ))];
