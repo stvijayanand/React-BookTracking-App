@@ -60,14 +60,10 @@ class BooksApp extends React.Component {
   }
 
   searchByTitleOrAuthor = query => {
-
     BooksAPI.search(query).then(books => (
-      this.setState(currentState => {
-        return { books };
-      })
-
-    )).catch(() => (
-      console.log('catch')
+      this.setState({ books })
+    )).catch((error) => (
+      console.log(error)
     ));
   }
 

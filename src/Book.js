@@ -4,11 +4,13 @@ import BookShelfChanger from "./BookShelfChanger";
 const Book = props => {
     const { bookInfo, updateBookShelf } = props;
 
+    const backgroundImageUrl = (bookInfo && bookInfo.imageLinks && bookInfo.imageLinks.thumbnail) ?
+        'url(' + bookInfo.imageLinks.thumbnail + '})'
+        : '';
     const imageStyle = {
         width: 128,
         height: 193,
-        backgroundImage:
-            'url(' + bookInfo.imageLinks.thumbnail + '})'
+        backgroundImage: backgroundImageUrl
     };
 
     let authors = '';
