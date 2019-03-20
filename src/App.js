@@ -3,7 +3,15 @@ import "./App.css";
 import * as BooksAPI from "./BooksAPI";
 import Shelves from "./Shelves";
 import Search from "./Search";
-import { Route } from "react-router-dom"
+import { Route, Switch } from "react-router-dom"
+
+
+//https://tylermcginnis.com/react-router-handling-404-pages/
+const CatchAll = ({ location }) => (
+  <div>
+    <h3>No match for <code>{location.pathname}</code></h3>
+  </div>
+)
 
 class BooksApp extends React.Component {
   state = {
@@ -74,29 +82,31 @@ class BooksApp extends React.Component {
     }
   }
 
-
   render() {
     const { books } = this.state;
 
     return (
       <div className="app">
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <Shelves books={books}
-              updateBookShelf={this.updateBookShelf}></Shelves>
-          )}></Route>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <Shelves books={books}
+                updateBookShelf={this.updateBookShelf}></Shelves>
+            )}></Route>
 
-        <Route
-          path="/search"
-          render={() => (
-            <Search books={books}
-              updateBookShelf={this.updateBookShelf}
-              searchByTitleOrAuthor={this.searchByTitleOrAuthor}
-              onClose={this.getAll}></Search>
-          )}></Route>
+          <Route
+            path="/search"
+            render={() => (
+              <Search books={books}
+                updateBookShelf={this.updateBookShelf}
+                searchByTitleOrAuthor={this.searchByTitleOrAuthor}
+                onClose={this.getAll}></Search>
+            )}></Route>
 
+          <Route component={CatchAll}></Route>
+        </Switch>
       </div>
     );
   }
