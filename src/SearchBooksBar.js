@@ -15,9 +15,9 @@ class SearchBooksBar extends Component {
     handleSearchChange = query => {
         const { onInput } = this.props;
 
-        this.setState({ searchText: query.trim() });
+        this.setState({ searchText: query });
 
-        onInput(query.trim());
+        onInput(query);
     }
 
 
