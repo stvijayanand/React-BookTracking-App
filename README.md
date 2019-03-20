@@ -2,38 +2,35 @@
 
 A bookshelf app that allows you to select and categorize books you have read, are currently reading, or want to read. It is built using React and uses an API server hosted at https://reactnd-books-api.udacity.com
 
-## TL;DR
 
-To get started developing right away:
+# App Functionality
+
+In this application, the main page displays a list of "shelves" (i.e. categories), each of which contains a number of books. The three shelves are:
+
+. Currently Reading
+. Want to Read
+. Read
+
+Each book has a control that lets you select the shelf for that book. When you select a different shelf, the book moves there. Note that the default value for the control should always be the current shelf the book is in.
+
+The main page also has a link to /search, a search page that allows you to find books to add to your library.
+
+The search page has a text input that may be used to find books. As the value of the text input changes, the books that match that query are displayed on the page, along with a control that lets you add the book to your library. 
+
+The search page also has a link to / (the root URL), which leads back to the main page.
+
+When you navigate back to the main page from the search page, you should instantly see all of the selections you made on the search page in your library.
+
+## Install dependencies and Run the app
 
 * install all project dependencies with `npm install`
 * start the development server with `npm start`
 
-## What You're Getting
-```bash
-├── CONTRIBUTING.md
-├── README.md - This file.
-├── SEARCH_TERMS.md # The whitelisted short collection of available search terms for you to use with your app.
-├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
-├── public
-│   ├── favicon.ico # React Icon, You may change if you wish.
-│   └── index.html # DO NOT MODIFY
-└── src
-    ├── App.css # Styles for your app. Feel free to customize this as you desire.
-    ├── App.js # This is the root of your app. Contains static HTML right now.
-    ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
-    ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
-    ├── icons # Helpful images for your app. Use at your discretion.
-    │   ├── add.svg
-    │   ├── arrow-back.svg
-    │   └── arrow-drop-down.svg
-    ├── index.css # Global styles. You probably won't need to change anything here.
-    └── index.js # You should not need to modify this file. It is used for DOM rendering only.
-```
+## Search Terms
 
-Remember that good React design practice is to create new JS files for each component and use import/require statements to include them where they are needed.
+SEARCH_TERMS.md # The whitelisted short collection of available search terms for you to use with your app.
 
-## Backend Server
+## Backend Server (https://reactnd-books-api.udacity.com)
 
 To simplify your development process, we've provided a backend server for you to develop against. The provided file [`BooksAPI.js`](src/BooksAPI.js) contains the methods you will need to perform necessary operations on the backend:
 
